@@ -1,0 +1,40 @@
+{% extends 'site01/base.html' %}
+{% block body %}
+{%if authors %}
+<br><br>
+<style>
+table, th, td {
+    border: 3px solid white;
+    padding: 10px;
+    text-align: left;
+}
+</style>
+<table style="width:70%">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    {% for author in authors %}
+    <tr>
+        <td>{{ author.first_name }} {{ author.last_name }}</td>
+        <td>{{ author.email }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% else %}
+<h3>{{ message }}</h3>
+<button type="submit"><a href="{{ link }}" >Insert Authors?</a></button>
+
+{% endif %}
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+$("#authors").addClass("active");
+
+});
+</script>
+{% endblock %}

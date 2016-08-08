@@ -1,0 +1,33 @@
+{% extends 'site01/base.html' %}
+{% block body %}
+<html>
+
+<head>
+    <h3>Welcome...</h3>
+    <h4>Enter details to Signup</h4>
+</head>
+<form action="{% url 'signup' %}" method="post" role="form">
+    {% csrf_token %}
+
+    <label>Name</label>
+    <input type="text" name="name">
+    <br>
+    <label>Email</label>
+    <input type="email" name="email">
+    <br>
+    <label>Phone Number</label>
+    <input type="number" name="phone">
+    <br>
+    <label>Set Password</label>
+    <input type="password" name="password">
+    <br><label>Date of birth</label>
+    <input type="datetime" name="dob">
+    <br>
+    <button type="submit">Submit</button>
+</form>
+
+
+</html>
+{% endblock %}
+
+

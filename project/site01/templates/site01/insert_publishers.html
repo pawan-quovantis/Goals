@@ -1,0 +1,46 @@
+{% extends 'site01/base.html' %}
+{% block body %}
+<form action="{% url 'insert_publishers' %}" method="post">
+    {% csrf_token %}
+    {{ publisher_form.non_field_errors }}
+    {% if message %}
+    <h3>{{ message }}</h3>
+    <button type="submit"><a href="{{ link }}" >Insert {{ entity }}</a></button><br><br>
+    {% endif %}
+    <label for="name">Name:</label>
+    {{ publisher_form.name }}
+    {{ publisher_form.name.errors }}
+    <br>
+    <label for="address">Address:</label>
+    {{ publisher_form.address }}
+    {{ publisher_form.address.errors }}
+    <br>
+    <label for="city">City:</label>
+    {{ publisher_form.city }}
+    {{ publisher_form.city.errors }}
+    <br>
+    <label for="state">State:</label>
+    {{ publisher_form.state }}
+    {{ publisher_form.state.errors }}
+    <br>
+    <label for="country">Country:</label>
+    {{ publisher_form.country }}
+    {{ publisher_form.country.errors }}
+    <br>
+    <label for="website">Website:</label>
+    {{ publisher_form.website }}
+    {{ publisher_form.website.errors }}
+    <br>
+
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+$("#publishers").addClass("active");
+
+});
+</script>
+{% endblock %}

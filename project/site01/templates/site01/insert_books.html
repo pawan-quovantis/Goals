@@ -1,0 +1,41 @@
+{% extends 'site01/base.html' %}
+
+{% block body %}
+<form action="{% url 'insert_books' %}" method="post">
+    {% csrf_token %}
+    {{ book_form.non_field_errors }}
+    {% if message %}
+    <center>
+    <h3>{{ message }}</h3>
+    <button type="submit"><a href="{{ link }}" >Insert {{ entity }}</a></button><br><br>
+    {% endif %}
+    <label for="title">Title:</label>
+    {{ book_form.title }}
+    {{ book_form.title.errors }}
+    <br>
+    <label for="author">Author:</label>
+    {{ book_form.author }}
+    {{ book_form.author.errors }}
+    <br>
+    <label for="publisher">Publisher:</label>
+    {{ book_form.publisher }}
+    {{ book_form.publisher.errors }}
+    <br><label for="publishing_date">Publishing Date:</label>
+    {{ book_form.publishing_date }}
+    {{ book_form.publishing_date.errors }}
+    <br><br>
+    <button type="submit">Submit</button>
+    </center>
+</form>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+$(document).ready(function(){
+$("#books").addClass("active");
+
+});
+</script>
+{% endblock %}

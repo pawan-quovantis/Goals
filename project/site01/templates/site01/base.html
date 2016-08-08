@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Books</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="/static/layout/styles/layout.css" type="text/css" />
+<script type="text/javascript" src="/static/layout/scripts/jquery.min.js"></script>
+
+</head>
+<body id="top">
+<div class="wrapper col1">
+  <div id="header">
+    <div class="fl_left">
+      <h1><a href="#">Books</a></h1>
+      <p>brief intro</p>
+    </div>
+
+    <br class="clear" />
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+<div class="wrapper col2">
+  <div id="topbar">
+    <div id="topnav">
+      <ul>
+        <li id="home"><a href="/home/">Home</a></li>
+        <li id="books"><a href="#">Books</a>
+          <ul>
+            <li><a href="/insert_books/">Insert Books</a></li>
+            <li><a href="/display_books/">Display Books</a></li>
+          </ul></li>
+        <li id="publishers"><a href="#">Publishers</a>
+          <ul>
+            <li ><a href="/insert_publishers/">Insert Publishers</a></li>
+            <li><a href="/display_publishers/">Display Publishers</a></li>
+          </ul></li>
+        <li id="authors"><a href="#">Authors</a>
+          <ul>
+            <li><a href="/insert_authors/">Insert Authors</a></li>
+            <li><a href="/display_authors/">Display Authors</a></li>
+          </ul></li>
+
+      </ul>
+    </div>
+
+    <br class="clear" />
+  </div>
+</div>
+
+<!-- ####################################################################################################### -->
+<div class="wrapper col4">
+  <div id="featured_intro">
+    {% block body %}
+    {% endblock %}
+    <br class="clear" />
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+
+</body>
+</html>
+
+{% block script %}
+<script>
+
+</script>
+
+{% endblock %}

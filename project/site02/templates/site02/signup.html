@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <h3>Welcome...</h3>
+    <h4>Enter details to Signup</h4>
+
+
+</head>
+<form action="{% url 'signup1' %}" method="post" role="form">
+    {% csrf_token  %}
+{{ form.non_field_errors }}
+    <label>Name</label>
+    {{ form.name }}
+    {{ form.name.errors }}
+    <br>
+    <label>Email</label>
+    {{ form.email }}
+    {{ form.email.errors }}
+    <br>
+    <label>Phone Number</label>
+    {{ form.phone }}
+    {{ form.phone.errors }}
+    <br>
+    <label>Set Password</label>
+    {{ form.password }}
+    {{ form.password.errors }}
+    <br><label>Date of birth</label>
+    {{ form.dob }}
+    {{ form.dob.errors }}
+    <br>
+
+    <button type="submit">Submit</button>
+</form>
+
+
+</html>
+

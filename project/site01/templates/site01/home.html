@@ -1,0 +1,19 @@
+{% extends 'site01/base.html' %}
+{% block body %}
+<h1>Welcome {{ email }}</h1>
+<form action="{% url 'site2' %}" method="post">
+    {% csrf_token %}
+    <label>Willing to go experience a next level entertainment?</label>
+    <button type="submit">Yeah Take me There!! </button>
+</form>
+
+<a href="{% url 'logout' %}">Log Out</a>
+{% endblock %}
+{% block script %}
+<script>
+$(document).ready(function(){
+$("#home").addClass("active");
+
+});
+</script>
+{% endblock %}

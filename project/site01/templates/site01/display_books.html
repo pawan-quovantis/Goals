@@ -1,0 +1,46 @@
+{% extends 'site01/base.html' %}
+{% block body %}
+{%if books %}
+<br><br>
+<style>
+table, th, td {
+    border: 3px solid white;
+    padding: 10px;
+    text-align: left;
+}
+</style>
+<table style="width:70%">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publisher</th>
+        <th>Publishing Date</th>
+    </tr>
+    {% for book in books %}
+    <tr>
+        <td>{{ book.title }}</td>
+        {% for author in book.authors.all %}
+        <td>{{ author.first_name }} {{ author.last_name }}</td>
+        {% endfor %}
+        <td>{{ book.publisher.name }}</td>
+        <td>{{ book.publication_date }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% else %}
+<h3>{{ message }}</h3>
+<button type="submit"><a href="{{ link }}" >Insert Books?</a></button>
+
+{% endif %}
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+$("#books").addClass("active");
+
+});
+</script>
+{% endblock %}
