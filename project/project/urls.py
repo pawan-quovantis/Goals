@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^signup/$', views1.signup, name="signup"),
     url(r'^login/$', views1.login1, name="login"),
-    url(r'^home/$', views1.home, name="home"),
+    url(r'^$', views1.home, name="home"),
     url(r'^logout/$', views1.logout1, name="logout"),
 
     url(r'^display_books/$', views1.display_books, name="display_books"),

@@ -81,6 +81,7 @@ def display_books(request):
             return render(request, "site01/display_books.html", {"message": message, "link": link})
 
 
+@login_required(login_url='/login/')
 @user_passes_test(user_can_insert, redirect_field_name='/display_books/')
 def insert_books(request):
     if request.method == "GET":
@@ -122,6 +123,7 @@ def insert_books(request):
 
 
 @login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def display_authors(request):
     if request.method == "GET":
         authors = Author.objects.all()
@@ -133,6 +135,7 @@ def display_authors(request):
             return render(request, "site01/display_authors.html", {"message": message, "link": link})
 
 
+@login_required(login_url='/login/')
 @user_passes_test(user_can_insert, redirect_field_name='/display_authors/')
 def insert_authors(request):
     if request.method == "GET":
@@ -159,6 +162,7 @@ def insert_authors(request):
 
 
 @login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def display_publishers(request):
     if request.method == "GET":
         publishers = Publisher.objects.all()
@@ -170,6 +174,7 @@ def display_publishers(request):
             return render(request, "site01/display_publishers.html", {"message": message, "link": link})
 
 
+@login_required(login_url='/login/')
 @user_passes_test(user_can_insert, redirect_field_name='/display_publishers/')
 def insert_publishers(request):
     if request.method == "GET":

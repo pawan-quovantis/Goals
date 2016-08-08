@@ -1,7 +1,6 @@
 {% extends 'site01/base.html' %}
 {% block body %}
-<h2>Site 1 Login<br>
-10.0.0.27 </h2>
+<h2>Site 1 Login<br></h2>
 
 <form action="{% url 'login' %}" method="post" role="form">
     {% csrf_token %}
