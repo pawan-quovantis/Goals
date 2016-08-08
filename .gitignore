@@ -6,12 +6,6 @@ __pycache__/
 .idea/
 *.log*
 *.csv
-e2e_sites/ini/uwsgi.ini
-/e2e_sites/e2e_sites/config/production.py
-accounting/logs/
-accounting/third_party/
 
 .project
 .pydevproject
-
-/e2e_sites/temp
