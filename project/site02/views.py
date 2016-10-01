@@ -3,12 +3,33 @@ from forms import SignupForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from models import UserExtended
 
 
-@login_required(login_url='login1')
 def home(request):
-    name = request.session["username"]
-    return render(request, "site02/home.html", {'name':name})
+    # if user_registered(request):
+    #     message = "Welcome, "
+    # elif request.session.has_key("Site2_user"):
+    #     message = "Welcome Back, "
+    # else:
+    #     return redirect("/signup2/")
+    # message += request.session["email"]
+    message = "Under Construction. . . Please be Patient and come back later. ."
+    # return render(request, "site02/home.html", {'message': message})
+    return render(request, "site02/home.html", {'message': message})
+
+
+def user_registered(request):
+    if "hashed_email" in request.COOKIES:
+        email = request.COOKIES['hashed_email']
+        hashed_emails = UserExtended.objects.values('hashed_email')
+        if email in hashed_emails:
+            user = User.objects.get(hashed_email=email)
+            login(request, user)
+            request.session["Site1_user_verified"] = True
+            request.session["email"] = email
+            return True
+    return False
 
 
 def signup(request):
@@ -24,7 +45,8 @@ def signup(request):
             password = data["password"]
             user = User.objects.create_user(first_name=name, email=email, password=password)
             user.save()
-            # request.session["username"] = name
+            request.session["username"] = email
+            request.session["Site2_user"] = True
             return redirect("/login2/")
         else:
             form = SignupForm(request.POST)
@@ -40,6 +62,7 @@ def login2(request):
         user = authenticate(username=email, password=password)
         if user:
             request.session["username"] = email
+            request.session["Site2_user"] = True
             login(request, user)
             return redirect("/site2/")
         else:

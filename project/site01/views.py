@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from models import *
 from forms import *
+import hashlib
 
 
 def signup(request):
@@ -12,19 +13,19 @@ def signup(request):
         return render(request, 'site01/signup.html')
     else:
         name = request.POST["name"]
-        phone = request.POST["phone"]
+        # phone = request.POST["phone"]
         email = request.POST["email"]
         password = request.POST["password"]
-        date_of_birth = request.POST["dob"]
-        User.objects.create_user(first_name=name, username=email, password=password, date_joined=datetime.datetime.now())
-        # request.session["username"] = name
-
-        return render(request, 'site01/login.html')
+        # date_of_birth = request.POST["dob"]
+        User.objects.create_user(first_name=name, username=email, password=password,
+                                 date_joined=datetime.datetime.now())
+        return create_session_and_response(request, email, password)
 
 
 def login1(request):
-    # if request.user.is_authenticated():
-    #     return redirect('/home/')
+
+    if request.user.is_authenticated():
+        return redirect('/')
     if request.method == "GET":
         return render(request, "site01/login.html")
     else:
@@ -32,33 +33,43 @@ def login1(request):
         password = request.POST["password"]
         user = authenticate(username=email, password=password)
         if user:
-            request.session["username"] = email
-            response = redirect('/home/')
-            response.set_cookie('user', user)
-            login(request, user)
-            return response
+            return create_session_and_response(request, email, password)
         else:
-            return render(request, "site01/login.html", {'message': "Enter correct details"})
+            return render(request, "site01/login.html", {'message': "Enter correct details", 'user': request.user})
+
+
+def create_session_and_response(request, email, password):
+    create_session(request, email, password)
+    response = redirect('/')
+    response.set_cookie('hashed_email', str(hashlib.sha256(email).hexdigest()))
+    return response
+
+
+def create_session(request, email, password):
+    request.session["username"] = email
+    request.session["loggedin"] = True
+    user = authenticate(username=email, password=password)
+    login(request, user)
 
 
 @login_required(login_url='/login/')
 def home(request):
     if request.user.is_authenticated():
-
         email = request.session["username"]
         return render(request, "site01/home.html", {'email': email})
     else:
-        return redirect('login')
+        return redirect('/login/')
 
 
 @login_required(login_url='/login/')
 def logout1(request):
     if request.method == "GET":
-        return render(request, 'site01/logout.html')
+        return render(request, 'site01/logout.html', {'user': request.user})
     else:
         logout(request)
-        response = redirect('/login/')
+        response = redirect('/')
         response.delete_cookie("user")
+        request.session["loggedin"] = False
         return response
 
 
@@ -82,7 +93,6 @@ def display_books(request):
 
 
 @login_required(login_url='/login/')
-@user_passes_test(user_can_insert, redirect_field_name='/display_books/')
 def insert_books(request):
     if request.method == "GET":
         book_form = BookForm()
@@ -100,14 +110,16 @@ def insert_books(request):
             publisher_object = Publisher.objects.all().filter(name=publisher).first()
             if author_object is None:
                 message = "Author does not exist in out database, wanna add first?"
-                link = "/insert_author/"
+                link = "/insert_authors/"
                 return render(request, "site01/insert_books.html", {"book_form": book_form, "message": message,
-                                                                    "link": link, "entity": "Author"})
+                                                                    "link": link, "entity": "Author",
+                                                                    'user': request.user})
             if publisher_object is None:
                 message = "Publisher does not exist in out database, wanna add first?"
                 link = "/insert_publisher/"
                 return render(request, "site01/insert_books.html", {"book_form": book_form, "message": message,
-                                                                    "link": link, "entity": "Publisher"})
+                                                                    "link": link, "entity": "Publisher",
+                                                                    'user': request.user})
             try:
                 book = Book(title=title, publication_date=publishing_date, publisher=publisher_object)
                 book.save()
@@ -123,7 +135,6 @@ def insert_books(request):
 
 
 @login_required(login_url='/login/')
-@login_required(login_url='/login/')
 def display_authors(request):
     if request.method == "GET":
         authors = Author.objects.all()
@@ -136,7 +147,6 @@ def display_authors(request):
 
 
 @login_required(login_url='/login/')
-@user_passes_test(user_can_insert, redirect_field_name='/display_authors/')
 def insert_authors(request):
     if request.method == "GET":
         author_form = AuthorForm()
@@ -149,7 +159,7 @@ def insert_authors(request):
             last_name = data["last_name"]
             email = data["email"]
             try:
-                author = Author(first_name=first_name, last_name=last_name, email= email)
+                author = Author(first_name=first_name, last_name=last_name, email=email)
                 author.save()
                 return redirect("/display_authors/")
             except Exception, e:
@@ -161,7 +171,6 @@ def insert_authors(request):
             return render(request, "site01/insert_books.html", {"author_form": author_form, "errors": errors})
 
 
-@login_required(login_url='/login/')
 @login_required(login_url='/login/')
 def display_publishers(request):
     if request.method == "GET":
@@ -191,7 +200,8 @@ def insert_publishers(request):
             country = data["country"]
             website = data["website"]
             try:
-                publisher = Publisher(name=name, address=address, city=city, state_province=state, country=country, website=website)
+                publisher = Publisher(name=name, address=address, city=city, state_province=state, country=country,
+                                      website=website)
                 publisher.save()
                 return redirect("/display_publishers/")
             except Exception, e:

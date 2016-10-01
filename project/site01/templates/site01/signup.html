@@ -3,29 +3,46 @@
 <html>
 
 <head>
-    <h3>Welcome...</h3>
-    <h4>Enter details to Signup</h4>
+    <h3>Welcome...  Enter details to Signup</h3>
+    <br>
 </head>
-<form action="{% url 'signup' %}" method="post" role="form">
+<form class="signup" action="{% url 'signup' %}" method="post" role="form">
     {% csrf_token %}
-
-    <label>Name</label>
+    <label>Name: </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="text" name="name">
     <br>
-    <label>Email</label>
+    <br>
+    <label>Email: </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <input type="email" name="email">
     <br>
-    <label>Phone Number</label>
+    <br>
+    <label>Phone Number:</label>
+    &nbsp;&nbsp;&nbsp;
     <input type="number" name="phone">
     <br>
-    <label>Set Password</label>
-    <input type="password" name="password">
-    <br><label>Date of birth</label>
-    <input type="datetime" name="dob">
     <br>
-    <button type="submit">Submit</button>
+    <label>Set Password: </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="password" name="password">
+    <br>
+    <br>
+    <label>Date of birth: </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="date" name="dob">
+    <br>
+    <br>
+    <button id="button" type="submit">Submit</button>
 </form>
-
+<style>
+    #button{
+        cursor: pointer;
+    }
+    .signup{
+    font-size: 14px;
+    }
+</style>
 
 </html>
 {% endblock %}

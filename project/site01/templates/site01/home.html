@@ -1,13 +1,14 @@
 {% extends 'site01/base.html' %}
 {% block body %}
 <h1>Welcome {{ email }}</h1>
-<form action="{% url 'site2' %}" method="post">
+<form action="{% url 'site2' %}" method="post" target="_blank">
     {% csrf_token %}
     <label>Willing to go experience a next level entertainment?</label>
-    <button type="submit">Yeah Take me There!! </button>
+    <br>
+    <br>
+    <button type="submit">Register Now</button>
 </form>
 
-<a href="{% url 'logout' %}">Log Out</a>
 {% endblock %}
 {% block script %}
 <script>

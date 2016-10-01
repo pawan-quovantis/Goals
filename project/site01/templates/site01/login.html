@@ -1,23 +1,41 @@
 {% extends 'site01/base.html' %}
 {% block body %}
-<h2>Site 1 Login<br></h2>
-
-<form action="{% url 'login' %}" method="post" role="form">
-    {% csrf_token %}
+<h2>Login</h2>
+<br><br>
+<div class="main">
+    {% if request.session.login_error_message %}
+    <h3>Please Signup/Login to view the request page.</h3>
+    {% endif %}
 {% if message %}
     <h3>{{ message }}</h3>
-{% else %}
-
 {% endif%}
-    <label>Email</label>
-    <input type="text" name="email">
+<form action="{% url 'login' %}" method="post" role="form">
+    {% csrf_token %}
+    <label class="col-md-4">Email:</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input class="col-md-4" type="text" name="email">
+    <br>
     <br>
 
-    <label>Password</label>
+    <label>Password:</label>
+    &nbsp;&nbsp;
     <input type="password" name="password">
+    <br>
     <br>
 
     <button type="submit"> Submit </button>
 
 </form>
+</div>
+    <button class="signup" onclick="window.location.href='/signup/'">Sign Up ?</button>
+<style>
+.main{
+    height: 200px;
+    width: 250;
+    float: left;
+}
+    .signup{
+          margin: 74px 0px 0px 25px;
+    }
+</style>
 {% endblock %}

@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+# AUTH_USER_MODEL = 'site02.Site2User'
 
 INSTALLED_APPS = [
     'site02.apps.Site02Config',
@@ -50,6 +51,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'site01.middleware.set_error_message_middleware.SetErrorMessageMiddleware'
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -85,8 +87,18 @@ DATABASES = {
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
 
+    },
+    'site02': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'site02',
+        'USER': 'root',
+        'PASSWORD': 'Passw0rd',
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+
     }
 }
+DATABASE_APPS_MAPPING = {'site01.apps.Site01Config': 'default', 'site02.apps.Site02Config': 'site02'}
 
 
 # Password validation
